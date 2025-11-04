@@ -1,0 +1,94 @@
+int main() {
+    int opcaoPrincipal, opcao, tamanho = 0;
+    Item mochilaVetor[100];
+    No *mochilaLista = NULL;
+    char nome[30];
+
+    do {
+        printf("\n==== MENU PRINCIPAL ====\n");
+        printf("1 - Usar Mochila com Vetor\n");
+        printf("2 - Usar Mochila com Lista Encadeada\n");
+        printf("0 - Sair\n");
+        printf("Escolha: ");
+        scanf("%d", &opcaoPrincipal);
+        getchar();
+
+        if (opcaoPrincipal == 1) {
+            do {
+                printf("\n--- Mochila com Vetor ---\n");
+                printf("1 - Inserir item\n");
+                printf("2 - Remover item\n");
+                printf("3 - Listar itens\n");
+                printf("4 - Buscar (sequencial)\n");
+                printf("5 - Ordenar e Buscar (binária)\n");
+                printf("0 - Voltar\n");
+                printf("Escolha: ");
+                scanf("%d", &opcao);
+                getchar();
+
+                switch(opcao) {
+                    case 1: inserirItemVetor(mochilaVetor, &tamanho); break;
+                    case 2:
+                        printf("Nome do item: ");
+                        fgets(nome, 30, stdin);
+                        nome[strcspn(nome, "\n")] = 0;
+                        removerItemVetor(mochilaVetor, &tamanho, nome);
+                        break;
+                    case 3: listarItensVetor(mochilaVetor, tamanho); break;
+                    case 4:
+                        printf("Nome do item: ");
+                        fgets(nome, 30, stdin);
+                        nome[strcspn(nome, "\n")] = 0;
+                        int c = 0;
+                        buscarSequencialVetor(mochilaVetor, tamanho, nome, &c);
+                        printf("Comparações: %d\n", c);
+                        break;
+                    case 5:
+                        ordenarVetor(mochilaVetor, tamanho);
+                        printf("Nome do item: ");
+                        fgets(nome, 30, stdin);
+                        nome[strcspn(nome, "\n")] = 0;
+                        c = 0;
+                        buscarBinariaVetor(mochilaVetor, tamanho, nome, &c);
+                        printf("Comparações: %d\n", c);
+                        break;
+                }
+            } while(opcao != 0);
+        }
+
+        else if (opcaoPrincipal == 2) {
+            do {
+                printf("\n--- Mochila com Lista Encadeada ---\n");
+                printf("1 - Inserir item\n");
+                printf("2 - Remover item\n");
+                printf("3 - Listar itens\n");
+                printf("4 - Buscar item\n");
+                printf("0 - Voltar\n");
+                printf("Escolha: ");
+                scanf("%d", &opcao);
+                getchar();
+
+                switch(opcao) {
+                    case 1: mochilaLista = inserirItemLista(mochilaLista); break;
+                    case 2:
+                        printf("Nome do item: ");
+                        fgets(nome, 30, stdin);
+                        nome[strcspn(nome, "\n")] = 0;
+                        mochilaLista = removerItemLista(mochilaLista, nome);
+                        break;
+                    case 3: listarItensLista(mochilaLista); break;
+                    case 4:
+                        printf("Nome do item: ");
+                        fgets(nome, 30, stdin);
+                        nome[strcspn(nome, "\n")] = 0;
+                        int comp = 0;
+                        buscarItemLista(mochilaLista, nome, &comp);
+                        printf("Comparações: %d\n", comp);
+                        break;
+                }
+            } while(opcao != 0);
+        }
+
+    } while(opcaoPrincipal != 0);
+    return 0;
+}
